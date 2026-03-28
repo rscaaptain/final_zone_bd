@@ -94,7 +94,8 @@ async function serveHtml(res, filename) {
         html = html
             .replace(/%%SITE_NAME%%/g, s.site_name)
             .replace(/%%SITE_LOGO%%/g, s.site_logo)
-            .replace(/%%FAV_ICON%%/g, s.fav_icon);
+            .replace(/%%FAV_ICON%%/g, s.fav_icon)
+            .replace('</head>', '<script src="/js/page-loader.js"></script>\n</head>');
         res.setHeader('Content-Type', 'text/html');
         res.send(html);
     } catch (err) {
