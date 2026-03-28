@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - %%SITE_NAME%%</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary: #7367f0; --bg: #f8f7fa; --card: #ffffff; --text: #2d2d2d; --text-muted: #6e6b7b; --border: #ebe9f1; --success: #28c76f; --danger: #ea5455; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); padding-bottom: 70px; }
+        
+        .header { background: linear-gradient(135deg, var(--primary), #5a52d0); padding: 24px 20px 60px; color: #fff; text-align: center; }
+        .header h1 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+        .header p { font-size: 13px; opacity: 0.9; }
+
+        .container { padding: 0 20px; max-width: 700px; margin: -40px auto 0; }
+        
+        .profile-card { background: #fff; border-radius: 16px; padding: 24px; text-align: center; box-shadow: 0 4px 24px rgba(0,0,0,0.06); margin-bottom: 20px; }
+        .avatar { width: 80px; height: 80px; background: rgba(115,103,240,0.1); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 32px; color: var(--primary); margin-bottom: 12px; border: 2px solid #fff; box-shadow: 0 4px 12px rgba(115,103,240,0.2); }
+        .name { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+        .username { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+        
+        .balance-box { background: rgba(115,103,240,0.05); border: 1px solid rgba(115,103,240,0.1); border-radius: 12px; padding: 16px; display: flex; justify-content: space-between; align-items: center; }
+        .bal-label { font-size: 12px; font-weight: 600; color: var(--text-muted); }
+        .bal-amount { font-size: 24px; font-weight: 800; color: var(--primary); }
+        .btn-add { background: var(--primary); color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer; }
+
+        .menu-list { background: #fff; border-radius: 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); overflow: hidden; margin-bottom: 24px; }
+        .menu-item { display: flex; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--border); text-decoration: none; color: var(--text); font-size: 14px; font-weight: 500; transition: background 0.2s; cursor: pointer; }
+        .menu-item:last-child { border-bottom: none; }
+        .menu-item:hover { background: var(--bg); }
+        .menu-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; margin-right: 12px; }
+        .icon-blue { background: rgba(0,207,232,0.1); color: #00cfe8; }
+        .icon-green { background: rgba(40,199,111,0.1); color: var(--success); }
+        .icon-purple { background: rgba(115,103,240,0.1); color: var(--primary); }
+        .icon-red { background: rgba(234,84,85,0.1); color: var(--danger); }
+        .menu-text { flex: 1; }
+        .menu-arrow { color: var(--text-muted); font-size: 12px; }
+
+        .btn-logout { width: 100%; background: #fff; color: var(--danger); border: 1px solid rgba(234,84,85,0.2); padding: 14px; border-radius: 12px; font-weight: 600; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 2px 8px rgba(234,84,85,0.05); }
+
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid var(--border); display: flex; z-index: 100; max-width: 700px; margin: 0 auto; box-shadow: 0 -4px 10px rgba(0,0,0,0.05); }
+        .nav-item { flex: 1; padding: 10px 0 6px; text-align: center; text-decoration: none; color: var(--text-muted); font-size: 10px; font-weight: 600; }
+        .nav-item i { display: block; font-size: 22px; margin-bottom: 3px; }
+        .nav-item.active { color: var(--primary); }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>My Dashboard</h1>
+    <p>Manage your account & matches</p>
+</div>
+
+<div class="container">
+    <div class="profile-card" id="profileContent">
+        <div style="padding:40px;"><i class="fas fa-circle-notch fa-spin fa-2x" style="color:var(--primary);"></i></div>
+    </div>
+
+    <div class="menu-list">
+        <a href="#" class="menu-item">
+            <div class="menu-icon icon-blue"><i class="fas fa-gamepad"></i></div>
+            <div class="menu-text">My Matches</div>
+            <i class="fas fa-chevron-right menu-arrow"></i>
+        </a>
+        <a href="#" class="menu-item">
+            <div class="menu-icon icon-green"><i class="fas fa-wallet"></i></div>
+            <div class="menu-text">Add Money / Wallet</div>
+            <i class="fas fa-chevron-right menu-arrow"></i>
+        </a>
+        <a href="#" class="menu-item">
+            <div class="menu-icon icon-purple"><i class="fas fa-history"></i></div>
+            <div class="menu-text">Transaction History</div>
+            <i class="fas fa-chevron-right menu-arrow"></i>
+        </a>
+    </div>
+
+    <button class="btn-logout" onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </button>
+</div>
+
+<nav class="bottom-nav">
+    <a href="/" class="nav-item"><i class="fas fa-home"></i>Home</a>
+    <a href="/home" class="nav-item"><i class="fas fa-gamepad"></i>Matches</a>
+    <a href="/results" class="nav-item"><i class="fas fa-trophy"></i>Results</a>
+    <a href="/profile" class="nav-item active"><i class="fas fa-user"></i>Profile</a>
+</nav>
+
+<script>
+async function loadProfile() {
+    try {
+        const res = await fetch('/api/auth/me');
+        const data = await res.json();
+        
+        if (!data.success) {
+            window.location.href = '/login';
+            return;
+        }
+
+        const u = data.user;
+        document.getElementById('profileContent').innerHTML = `
+            <div class="avatar"><i class="fas fa-user"></i></div>
+            <div class="name">${u.first_name} ${u.last_name}</div>
+            <div class="username">@${u.username} • ${u.mobile}</div>
+            <div class="balance-box">
+                <div style="text-align:left;">
+                    <div class="bal-label">Total Balance</div>
+                    <div class="bal-amount">৳${parseFloat(u.balance).toFixed(2)}</div>
+                </div>
+                <button class="btn-add" onclick="alert('Payment gateway integration required.')">
+                    <i class="fas fa-plus"></i> Add
+                </button>
+            </div>
+        `;
+    } catch(e) {
+        window.location.href = '/login';
+    }
+}
+
+async function logout() {
+    if(!confirm('Are you sure you want to logout?')) return;
+    try {
+        await fetch('/api/auth/logout', { method: 'POST' });
+        window.location.href = '/';
+    } catch(e) { }
+}
+
+loadProfile();
+</script>
+</body>
+</html>

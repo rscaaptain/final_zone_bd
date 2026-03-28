@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-navbar-full layout-horizontal layout-without-menu" dir="ltr"
+    data-theme="theme-bordered" data-assets-path="https://cdn-bt4team.pages.dev/assets/"
+    data-template="horizontal-menu-template" data-style="light">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title id="page-title">%%SITE_NAME%%</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="%%FAV_ICON%%" type="image/png">
+    <link rel="apple-touch-icon" href="%%FAV_ICON%%">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/vendor/fonts/fontawesome.css" />
+    <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/vendor/fonts/tabler-icons.css" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/vendor/css/rtl/core.css" />
+    <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/vendor/css/rtl/theme-default.css" />
+    <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/css/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/vendor/libs/node-waves/node-waves.css" />
+    <link rel="stylesheet"
+        href="https://cdn-bt4team.pages.dev/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/vendor/libs/swiper/swiper.css" />
+    <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/vendor/libs/toastr/toastr.css" />
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/vendor/css/pages/cards-advance.css" />
+
+    <!-- Helpers -->
+    <script src="https://cdn-bt4team.pages.dev/assets/vendor/js/helpers.js"></script>
+    <script src="https://cdn-bt4team.pages.dev/assets/vendor/js/template-customizer.js"></script>
+    <script src="https://cdn-bt4team.pages.dev/assets/js/config.js"></script>
+
+    <style>
+        /* ===== SPLASH SCREEN ===== */
+        #splashScreen {
+            position: fixed;
+            inset: 0;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            /* Subtle logo watermark in background */
+            background-repeat: no-repeat;
+            background-position: center 30%;
+            background-size: 200px 200px;
+        }
+
+        /* Dark overlay to make watermark subtle */
+        #splashScreen::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.82);
+        }
+
+        #splashScreen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .splash-content {
+            position: relative;
+            /* above ::before overlay */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .splash-logo-img {
+            width: 88px;
+            height: 88px;
+            margin-bottom: 18px;
+        }
+
+        .splash-title {
+            color: #2c2c3e;
+            font-size: 1.55rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        .splash-subtitle {
+            color: #888;
+            font-size: 0.82rem;
+            margin-top: 3px;
+        }
+
+        .splash-loader {
+            margin-top: 32px;
+            display: flex;
+            gap: 7px;
+        }
+
+        .splash-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #696cff;
+            opacity: 0.3;
+            animation: splashBounce 1.2s infinite;
+        }
+
+        .splash-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .splash-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes splashPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 8px 32px rgba(105, 108, 255, 0.22);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 12px 40px rgba(105, 108, 255, 0.35);
+            }
+        }
+
+        @keyframes splashBounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.3;
+            }
+
+            50% {
+                transform: translateY(-7px);
+                opacity: 1;
+            }
+        }
+
+        /* ===== PROGRESS LOADER ===== */
+        .progress-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            z-index: 9999;
+            display: none;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #696cff 0%, #5f61e6 50%, #696cff 100%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            transition: width 0.2s ease;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        /* ===== MATERIAL BOTTOM NAVIGATION — all screen sizes ===== */
+        #bottomNav {
+            display: block;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #fffbff;
+            border-top: none;
+            box-shadow: 0 -1px 0 0 #e0e0e0, 0 -4px 16px rgba(0, 0, 0, 0.07);
+            z-index: 1100;
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        #bottomNav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            height: 64px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #bottomNav .nav-item {
+            flex: 1;
+        }
+
+        #bottomNav .nav-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 4px 0;
+            color: #49454f;
+            text-decoration: none;
+            position: relative;
+            transition: color 0.2s;
+            gap: 2px;
+        }
+
+        #bottomNav .nav-link .nav-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #bottomNav .nav-link i {
+            font-size: 1.3rem;
+            transition: transform 0.2s;
+        }
+
+        #bottomNav .nav-link span {
+            font-size: 0.68rem;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+        }
+
+        /* Active state — top highlight bar + primary color */
+        #bottomNav .nav-link.active {
+            color: #696cff;
+        }
+
+        #bottomNav .nav-link.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 32px;
+            height: 3px;
+            background: #696cff;
+            border-radius: 0 0 4px 4px;
+        }
+
+        #bottomNav .nav-link.active i {
+            transform: scale(1.1);
+        }
+
+        #bottomNav .nav-link.active span {
+            font-weight: 700;
+        }
+
+        /* Content padding for bottom nav on all screens */
+        .content-wrapper {
+            padding-bottom: 74px;
+        }
+
+        /* ===== CATEGORY IMAGES 1x1 ===== */
+        .category-card-img-wrap {
+            width: 100%;
+            padding-top: 100%;
+            /* 1:1 ratio */
+            position: relative;
+            overflow: hidden;
+            background: #f0f0f0;
+        }
+
+        .category-card-img-wrap img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ===== BANNER FIX ===== */
+        #bannerSlider {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        #bannerSlider .swiper-slide {
+            overflow: hidden;
+        }
+
+        #bannerSlider .swiper-slide img,
+        #bannerSlider .swiper-slide a img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Category Names */
+        .category-name {
+            font-size: 0.85rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 600;
+            padding-top: 6px;
+            padding-bottom: 6px;
+        }
+
+        /* Page transitions */
+        #content-area {
+            animation: fadeIn 0.2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Navbar improvements */
+        .layout-navbar .navbar {
+            box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Balance badge in navbar */
+        .balance-badge {
+            background: linear-gradient(135deg, #696cff 0%, #5f61e6 100%);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* Toast positioning fix for mobile */
+        @media (max-width: 576px) {
+            .toast-top-right {
+                top: 12px;
+                right: 12px;
+            }
+        }
+
+        .cursor-pointer {
+            cursor: pointer;
+        }
+
+        /* Guest overlay on home */
+        .guest-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 500;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    
+    </div>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        updateActiveMenu('results');
+            setTimeout(function () {
+                var m = document.getElementById('noticeModal');
+                if (m) m.style.display = 'flex';
+            }, 1200);
+        });
+    </script>
+
+    <!-- Progress Loader -->
+    <div class="progress-loader">
+        <div class="progress-bar"></div>
+    </div>
+
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu">
+        <div class="layout-container">
+
+            <!-- Navbar -->
+            <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
+                <div class="container-xxl">
+                    <a href="/home" 
+                        class="app-brand-text demo menu-text fw-bold text-decoration-none"
+                        style="display:flex; align-items:center; gap:8px; text-decoration:none; font-weight:700; font-size:1rem; color:inherit; flex-shrink:0;">
+                        <img src="%%SITE_LOGO%%" alt="%%SITE_NAME%%" class="pyhost-brand-img" style="width:30px; height:30px; border-radius:6px;">
+
+                        <span class="pyhost-brand-text" style="color: #696cff;">%%SITE_NAME%%</span>
+
+                    </a>
+
+                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                        <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
+                            <li class="nav-item d-flex gap-2">
+                                <a href="/login" class="btn btn-sm btn-primary"
+                                    >Login</a>
+                                <a href="/register" class="btn btn-sm btn-outline-primary"
+                                    >Register</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Content wrapper -->
+            <div class="layout-page">
+                <div class="content-wrapper">
+                    <!-- Content Container -->
+                    <div class="container-xxl flex-grow-1 container-p-y layout-content-parse" id="content-area">
+                        
+<div class="container-fluid px-2 py-3">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-3 mt-2">
+        <h4 class="mb-0 text-dark d-flex align-items-center gap-2" style="font-weight: 600;">
+            <i class="ti ti-trophy fs-3 text-secondary"></i> Results
+        </h4>
+        <button class="btn btn-outline-primary btn-icon" onclick="reloadCurrentPage()"><i class="ti ti-refresh fs-5"></i></button>
+    </div>
+
+    <!-- All Matches Button -->
+    <button class="btn btn-primary mb-3" style="border-radius: 6px; font-weight: 500;">
+        <i class="ti ti-list me-1"></i> All Matches
+    </button>
+
+    <!-- Search Bar & Filters -->
+    <div class="mb-3 mt-1">
+        <div class="input-group" style="box-shadow: 0 2px 4px rgba(0,0,0,0.02); border-radius: 6px;">
+            <span class="input-group-text bg-white" style="border-right: none; border-top-right-radius: 0; border-bottom-right-radius: 0; border-color: #dbdade;"><i class="ti ti-search text-muted"></i></span>
+            <input type="text" class="form-control" placeholder="Search by Match ID or title..." style="border-left: none; border-right: none; border-color: #dbdade; box-shadow: none;">
+            <span class="input-group-text bg-white cursor-pointer" style="border-left: 1px solid #dbdade; border-color: #dbdade; border-top-left-radius: 0; border-bottom-left-radius: 0;"><i class="ti ti-x text-muted"></i></span>
+        </div>
+    </div>
+
+    <!-- Filter Chips -->
+    <div class="d-flex overflow-auto pb-2 mb-3" style="white-space: nowrap; gap: 8px; flex-wrap: nowrap; -webkit-overflow-scrolling: touch;">
+        <span class="badge bg-primary px-3 py-2 cursor-pointer" style="border-radius: 20px; font-weight: 500; font-size: 0.75rem;">All</span>
+        <span class="badge bg-label-secondary px-3 py-2 cursor-pointer border" style="border-radius: 20px; font-weight: 500; font-size: 0.75rem; color: #6e6b7b !important; background: transparent !important; border-color: #d9d9d9 !important;">BR MATCH</span>
+        <span class="badge bg-label-secondary px-3 py-2 cursor-pointer border" style="border-radius: 20px; font-weight: 500; font-size: 0.75rem; color: #6e6b7b !important; background: transparent !important; border-color: #d9d9d9 !important;">CLASH SQUAD</span>
+        <span class="badge bg-label-secondary px-3 py-2 cursor-pointer border" style="border-radius: 20px; font-weight: 500; font-size: 0.75rem; color: #6e6b7b !important; background: transparent !important; border-color: #d9d9d9 !important;">E-SPORT MATCH</span>
+        <span class="badge bg-label-secondary px-3 py-2 cursor-pointer border" style="border-radius: 20px; font-weight: 500; font-size: 0.75rem; color: #6e6b7b !important; background: transparent !important; border-color: #d9d9d9 !important;">LONE WOLF</span>
+        <span class="badge bg-label-secondary px-3 py-2 cursor-pointer border" style="border-radius: 20px; font-weight: 500; font-size: 0.75rem; color: #6e6b7b !important; background: transparent !important; border-color: #d9d9d9 !important;">LOSS TO WIN</span>
+        <span class="badge bg-label-secondary px-3 py-2 cursor-pointer border" style="border-radius: 20px; font-weight: 500; font-size: 0.75rem; color: #6e6b7b !important; background: transparent !important; border-color: #d9d9d9 !important;">SURVIVAL MATCH</span>
+    </div>
+
+    <!-- Match Grid -->
+    <div class="row g-3">
+        
+        <!-- Card 1 -->
+        <div class="col-12 col-md-6 col-xl-4">
+            <div class="card p-3 border h-100" style="border-radius: 12px; box-shadow: none; border-color: #ebe9f1 !important;">
+                <div class="d-flex gap-3 align-items-center">
+                    <div class="position-relative">
+                        <img src="https://i.ibb.co.com/q3qTfbXR/free-fire-thumbnail-300x300.png" style="width: 55px; height: 55px; border-radius: 10px; object-fit: cover;">
+                        
+                        
+                    </div>
+                    <div class="flex-grow-1 min-w-0">
+                        <h6 class="mb-1 text-dark text-truncate" style="font-weight: 600; font-size: 0.95rem;">LOSS TO WIN ( 1V1 ) 3:40 P.M</h6>
+                        <div class="d-flex gap-2 mb-2 align-items-center flex-wrap">
+                            <span class="badge" style="background: rgba(105, 108, 255, 0.1); color: #696cff; font-weight: 600; font-size: 0.65rem;">LOSS TO WIN</span>
+                            <span class="badge bg-label-secondary text-muted" style="font-size: 0.65rem;">#413889</span>
+                        </div>
+                        <div class="d-flex text-muted mb-1" style="font-size: 0.75rem;">
+                            <i class="ti ti-device-gamepad me-1 fs-6"></i> <span>Solo | Mobile | Bermuda</span>
+                        </div>
+                        <div class="d-flex text-muted mb-1" style="font-size: 0.75rem;">
+                            <i class="ti ti-calendar me-1 fs-6"></i> <span>Mar 28, 2026</span>
+                        </div>
+                        <div class="d-flex text-muted" style="font-size: 0.75rem;">
+                            <i class="ti ti-users me-1 fs-6"></i> <span>2 players</span>
+                        </div>
+                    </div>
+                    <div class="text-muted ms-auto pe-2">
+                        <i class="ti ti-chevron-right fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="col-12 col-md-6 col-xl-4">
+            <div class="card p-3 border h-100" style="border-radius: 12px; box-shadow: none; border-color: #ebe9f1 !important;">
+                <div class="d-flex gap-3 align-items-center">
+                    <div class="position-relative">
+                        <img src="https://i.ibb.co.com/q3qTfbXR/free-fire-thumbnail-300x300.png" style="width: 55px; height: 55px; border-radius: 10px; object-fit: cover;">
+                        
+                        
+                    </div>
+                    <div class="flex-grow-1 min-w-0">
+                        <h6 class="mb-1 text-dark text-truncate" style="font-weight: 600; font-size: 0.95rem;">LOSS TO WIN ( 1V1 ) 3:30 P.M</h6>
+                        <div class="d-flex gap-2 mb-2 align-items-center flex-wrap">
+                            <span class="badge" style="background: rgba(105, 108, 255, 0.1); color: #696cff; font-weight: 600; font-size: 0.65rem;">LOSS TO WIN</span>
+                            <span class="badge bg-label-secondary text-muted" style="font-size: 0.65rem;">#616600</span>
+                        </div>
+                        <div class="d-flex text-muted mb-1" style="font-size: 0.75rem;">
+                            <i class="ti ti-device-gamepad me-1 fs-6"></i> <span>Solo | Mobile | Bermuda</span>
+                        </div>
+                        <div class="d-flex text-muted mb-1" style="font-size: 0.75rem;">
+                            <i class="ti ti-calendar me-1 fs-6"></i> <span>Mar 28, 2026</span>
+                        </div>
+                        <div class="d-flex text-muted" style="font-size: 0.75rem;">
+                            <i class="ti ti-users me-1 fs-6"></i> <span>2 players</span>
+                        </div>
+                    </div>
+                    <div class="text-muted ms-auto pe-2">
+                        <i class="ti ti-chevron-right fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="col-12 col-md-6 col-xl-4">
+            <div class="card p-3 border h-100" style="border-radius: 12px; box-shadow: none; border-color: #ebe9f1 !important;">
+                <div class="d-flex gap-3 align-items-center">
+                    <div class="position-relative">
+                        <img src="https://i.ibb.co.com/q3qTfbXR/free-fire-thumbnail-300x300.png" style="width: 55px; height: 55px; border-radius: 10px; object-fit: cover;">
+                        
+                        
+                    </div>
+                    <div class="flex-grow-1 min-w-0">
+                        <h6 class="mb-1 text-dark text-truncate" style="font-weight: 600; font-size: 0.95rem;">LONE WOLF ( 2V2 ) 3:20 P.M</h6>
+                        <div class="d-flex gap-2 mb-2 align-items-center flex-wrap">
+                            <span class="badge" style="background: rgba(105, 108, 255, 0.1); color: #696cff; font-weight: 600; font-size: 0.65rem;">LONE WOLF</span>
+                            <span class="badge bg-label-secondary text-muted" style="font-size: 0.65rem;">#882258</span>
+                        </div>
+                        <div class="d-flex text-muted mb-1" style="font-size: 0.75rem;">
+                            <i class="ti ti-device-gamepad me-1 fs-6"></i> <span>Solo | Mobile | Bermuda</span>
+                        </div>
+                        <div class="d-flex text-muted mb-1" style="font-size: 0.75rem;">
+                            <i class="ti ti-calendar me-1 fs-6"></i> <span>Mar 28, 2026</span>
+                        </div>
+                        <div class="d-flex text-muted" style="font-size: 0.75rem;">
+                            <i class="ti ti-users me-1 fs-6"></i> <span>4 players</span>
+                        </div>
+                    </div>
+                    <div class="text-muted ms-auto pe-2">
+                        <i class="ti ti-chevron-right fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="col-12 col-md-6 col-xl-4">
+            <div class="card p-3 border h-100" style="border-radius: 12px; box-shadow: none; border-color: #ebe9f1 !important;">
+                <div class="d-flex gap-3 align-items-center">
+                    <div class="position-relative">
+                        <img src="https://i.ibb.co.com/q3qTfbXR/free-fire-thumbnail-300x300.png" style="width: 55px; height: 55px; border-radius: 10px; object-fit: cover;">
+                        
+                        
+                    </div>
+                    <div class="flex-grow-1 min-w-0">
+                        <h6 class="mb-1 text-dark text-truncate" style="font-weight: 600; font-size: 0.95rem;">CLASH SQUAD ( 4V4 ) 3:20 P.M</h6>
+                        <div class="d-flex gap-2 mb-2 align-items-center flex-wrap">
+                            <span class="badge" style="background: rgba(105, 108, 255, 0.1); color: #696cff; font-weight: 600; font-size: 0.65rem;">CLASH SQUAD</span>
+                            <span class="badge bg-label-secondary text-muted" style="font-size: 0.65rem;">#843673</span>
+                        </div>
+                        <div class="d-flex text-muted mb-1" style="font-size: 0.75rem;">
+                            <i class="ti ti-device-gamepad me-1 fs-6"></i> <span>Solo | Mobile | Bermuda</span>
+                        </div>
+                        <div class="d-flex text-muted mb-1" style="font-size: 0.75rem;">
+                            <i class="ti ti-calendar me-1 fs-6"></i> <span>Mar 28, 2026</span>
+                        </div>
+                        <div class="d-flex text-muted" style="font-size: 0.75rem;">
+                            <i class="ti ti-users me-1 fs-6"></i> <span>8 players</span>
+                        </div>
+                    </div>
+                    <div class="text-muted ms-auto pe-2">
+                        <i class="ti ti-chevron-right fs-4"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+                    </div>
+
+                    <!-- Footer -->
+                    <footer class="content-footer footer bg-footer-theme">
+                        <div class="container-xxl">
+                            <div
+                                class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+                                <div class="text-body">
+                                    &copy;
+                                    <script>document.write(new Date().getFullYear())</script>
+                                    <a href="/developer" 
+                                        class="footer-link">%%SITE_NAME%%</a>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation — mobile only, Material You style -->
+        <nav id="bottomNav">
+            <ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="/home" data-page="home" >
+                        <span class="nav-indicator"><i class="ti ti-home"></i></span>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login" data-page="login" >
+                        <span class="nav-indicator"><i class="ti ti-login"></i></span>
+                        <span>Login</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/register" data-page="register"
+                        >
+                        <span class="nav-indicator"><i class="ti ti-user-plus"></i></span>
+                        <span>Register</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/results" data-page="results"
+                        >
+                        <span class="nav-indicator"><i class="ti ti-trophy"></i></span>
+                        <span>Results</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Core JS -->
+    <script src="https://cdn-bt4team.pages.dev/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="https://cdn-bt4team.pages.dev/assets/vendor/libs/popper/popper.js"></script>
+    <script src="https://cdn-bt4team.pages.dev/assets/vendor/js/bootstrap.js"></script>
+    <script src="https://cdn-bt4team.pages.dev/assets/vendor/libs/node-waves/node-waves.js"></script>
+    <script src="https://cdn-bt4team.pages.dev/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="https://cdn-bt4team.pages.dev/assets/vendor/libs/hammer/hammer.js"></script>
+    <script src="https://cdn-bt4team.pages.dev/assets/vendor/libs/typeahead-js/typeahead.js"></script>
+    <script src="https://cdn-bt4team.pages.dev/assets/vendor/js/menu.js"></script>
+
+    <!-- Vendors JS -->
+    <script src="https://cdn-bt4team.pages.dev/assets/vendor/libs/swiper/swiper.js"></script>
+    <script src="https://cdn-bt4team.pages.dev/assets/vendor/libs/toastr/toastr.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Main JS -->
+    <script src="https://cdn-bt4team.pages.dev/assets/js/main.js"></script>
+
+    <!-- App JS -->
+    <script>
+        // Global Variables
+        var currentUser = null;
+        var isLoggedIn = false;
+        var currentPageName = '';
+
+        // Toast Configuration
+        function showToast(type, title, message) {
+            toastr.options = {
+                closeButton: true,
+                progressBar: true,
+                positionClass: 'toast-top-right',
+                newestOnTop: true,
+                showEasing: 'swing',
+                hideEasing: 'linear',
+                showMethod: 'fadeIn',
+                hideMethod: 'fadeOut',
+                showDuration: 300,
+                hideDuration: 800,
+                timeOut: 3000,
+                extendedTimeOut: 1000
+            };
+            toastr[type](message, title);
+        }
+
+        // Loading functions (kept for compatibility but no longer show overlay)
+        function showLoading() { /* no-op */ }
+        function hideLoading() { /* no-op */ }
+
+        // Build clean URL from page string
+        function buildCleanUrl(page) {
+            var parts = page.split('&');
+            var url = '/' + parts[0];
+            if (parts.length > 1) url += '?' + parts.slice(1).join('&');
+            return url;
+        }
+
+        // Page Loading Function (SPA Router)
+        function loadPage(event, page, title, fromPopState) {
+            if (event) event.preventDefault();
+
+            var pageName = page.split('&')[0];
+            var url = buildCleanUrl(page);
+
+            var fetchUrl = 'pages/' + pageName + '.php';
+            var params = page.split('&');
+            if (params.length > 1) fetchUrl += '?' + params.slice(1).join('&');
+
+            currentPageName = pageName;
+
+            // Show progress bar
+            var loader = document.querySelector('.progress-loader');
+            var bar = document.querySelector('.progress-bar');
+            loader.style.display = 'block';
+            var progress = 0;
+
+            var interval = setInterval(function () {
+                if (progress < 85) {
+                    progress += Math.random() * 20;
+                    bar.style.width = Math.min(progress, 85) + '%';
+                }
+            }, 80);
+
+            fetch(fetchUrl, {
+                method: 'GET',
+                credentials: 'same-origin',
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            })
+                .then(function (res) { return res.text(); })
+                .then(function (html) {
+                    var $contentArea = $('#content-area');
+
+                    // Close any open Bootstrap modals and clean up backdrops
+                    document.querySelectorAll('.modal.show').forEach(function (m) {
+                        var mi = bootstrap.Modal.getInstance(m);
+                        if (mi) mi.hide();
+                    });
+                    document.querySelectorAll('.modal-backdrop').forEach(function (b) {
+                        b.parentNode.removeChild(b);
+                    });
+                    document.body.classList.remove('modal-open');
+                    document.body.style.removeProperty('overflow');
+                    document.body.style.removeProperty('padding-right');
+
+                    // Update browser URL BEFORE inserting content
+                    if (!fromPopState) {
+                        history.pushState({ page: page, title: title }, title, url);
+                    }
+
+                    // ---- Reliable script injection ----
+                    // 1. Parse the HTML and pull out <script> blocks
+                    var tmp = document.createElement('div');
+                    tmp.innerHTML = html;
+                    var scriptNodes = tmp.querySelectorAll('script');
+                    var scriptTexts = [];
+                    scriptNodes.forEach(function (s) {
+                        if (!s.src) scriptTexts.push(s.textContent); // inline only
+                        s.parentNode.removeChild(s);
+                    });
+
+                    // 2. Insert HTML (without scripts) so DOM is committed first
+                    $contentArea.css('animation', 'none');
+                    $contentArea[0].offsetHeight;
+                    $contentArea.css('animation', 'fadeIn 0.2s ease-in-out');
+                    $contentArea[0].innerHTML = tmp.innerHTML;
+
+                    clearInterval(interval);
+                    bar.style.width = '100%';
+                    setTimeout(function () {
+                        loader.style.display = 'none';
+                        bar.style.width = '0%';
+                    }, 250);
+
+                    updateActiveMenu(pageName);
+                    document.getElementById('page-title').textContent = (title || 'Home') + ' - %%SITE_NAME%%';
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                    // 3. Execute scripts AFTER DOM is fully committed
+                    //    Remove any previously injected page scripts first
+                    document.querySelectorAll('script[data-spa-page]').forEach(function (s) {
+                        s.parentNode.removeChild(s);
+                    });
+                    setTimeout(function () {
+                        scriptTexts.forEach(function (code) {
+                            if (!code.trim()) return;
+                            var s = document.createElement('script');
+                            s.setAttribute('data-spa-page', pageName);
+                            s.textContent = code;
+                            document.head.appendChild(s);
+                        });
+                    }, 0);
+                })
+                .catch(function (error) {
+                    clearInterval(interval);
+                    loader.style.display = 'none';
+                    bar.style.width = '0%';
+                    console.error('Load error:', error);
+                    showToast('error', 'Error', 'Failed to load page. Please try again.');
+                });
+        }
+
+        // Update Active Menu
+        function updateActiveMenu(page) {
+            var links = document.querySelectorAll('#bottomNav .nav-link');
+            links.forEach(function (link) {
+                link.classList.remove('active');
+                if (link.getAttribute('data-page') === page) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Handle browser back/forward
+        window.addEventListener('popstate', function (event) {
+            if (event.state && event.state.page) {
+                loadPage(null, event.state.page, event.state.title, true);
+            }
+        });
+
+
+        // Handle visibility change (app resume)
+        document.addEventListener('visibilitychange', function () {
+            if (!document.hidden && currentPageName) {
+                // Silently refresh current page data by triggering a custom event
+                var refreshEvent = new CustomEvent('appResumed');
+                document.dispatchEvent(refreshEvent);
+            }
+        });
+
+        // Logout Function
+        function logout() {
+            Swal.fire({
+                title: 'Logout',
+                text: 'Are you sure you want to logout?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#696cff',
+                cancelButtonColor: '#8592a3',
+                confirmButtonText: 'Yes, logout',
+                cancelButtonText: 'Cancel'
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'handlers/auth.php',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: { action: 'logout' },
+                        success: function (response) {
+                            if (response.success) {
+                                showToast('success', 'Success', 'Logged out successfully');
+                                setTimeout(function () { window.location.href = '/login'; }, 500);
+                            } else {
+                                showToast('error', 'Error', response.message || 'Logout failed');
+                            }
+                        },
+                        error: function () {
+                            showToast('error', 'Error', 'An error occurred during logout');
+                            setTimeout(function () { window.location.href = '/login'; }, 500);
+                        }
+                    });
+                }
+            });
+        }
+
+        // Reload current page content via AJAX (used by top-nav Refresh button)
+        function reloadCurrentPage() {
+            if (currentPageName) {
+                loadPage(null, currentPageName, document.getElementById('page-title').textContent.split(' - ')[0], true);
+            } else {
+                loadPage(null, 'home', 'Home', true);
+            }
+        }
+
+        // Real-time balance refresh
+        function refreshBalance() {
+            if (!isLoggedIn) return;
+            $.ajax({
+                url: 'handlers/user.php',
+                type: 'GET',
+                dataType: 'json',
+                data: { action: 'get_user' },
+                success: function (response) {
+                    if (response.success && response.data) {
+                        currentUser = response.data;
+                        var navBal = document.getElementById('navBalance');
+                        if (navBal) {
+                            navBal.innerHTML = '<i class="ti ti-wallet me-1"></i>' + parseFloat(response.data.total_balance).toFixed(2) + ' BDT';
+                        }
+                    }
+                },
+                error: function () { /* silent fail */ }
+            });
+        }
+
+        // Refresh balance every 30 seconds
+        if (isLoggedIn) {
+            setInterval(refreshBalance, 30000);
+        }
+
+        // ==================== CENTRALIZED EVENT HANDLERS ====================
+
+        // Password Toggle (delegation)
+        document.addEventListener('click', function (e) {
+            if (e.target.closest('.toggle-password')) {
+                var toggle = e.target.closest('.toggle-password');
+                var targetId = toggle.getAttribute('data-target');
+                var input = document.getElementById(targetId);
+                var icon = toggle.querySelector('i');
+                if (input) {
+                    if (input.type === 'password') {
+                        input.type = 'text';
+                        icon.classList.remove('ti-eye-off');
+                        icon.classList.add('ti-eye');
+                    } else {
+                        input.type = 'password';
+                        icon.classList.remove('ti-eye');
+                        icon.classList.add('ti-eye-off');
+                    }
+                }
+            }
+        });
+
+        // Form Submit Handlers (delegation)
+        document.addEventListener('submit', function (e) {
+            // Login Form
+            if (e.target.id === 'loginForm') {
+                e.preventDefault();
+                e.stopPropagation();
+
+                var loginInput = document.getElementById('login_input').value.trim();
+                var password = document.getElementById('login_password').value;
+                var alertEl = document.getElementById('loginAlert');
+                var btn = document.getElementById('loginBtn');
+
+                if (!loginInput || !password) {
+                    alertEl.className = 'alert alert-danger mb-3';
+                    alertEl.textContent = 'Please fill in all fields';
+                    alertEl.style.display = 'block';
+                    return false;
+                }
+
+                alertEl.style.display = 'none';
+                btn.disabled = true;
+                btn.querySelector('.btn-text').textContent = 'Signing in...';
+                btn.querySelector('.spinner-border').classList.remove('d-none');
+
+                $.ajax({
+                    url: 'handlers/auth.php',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { action: 'login', login_input: loginInput, password: password },
+                    success: function (response) {
+                        btn.disabled = false;
+                        btn.querySelector('.btn-text').textContent = 'Sign In';
+                        btn.querySelector('.spinner-border').classList.add('d-none');
+                        if (response.success) {
+                            showToast('success', 'Welcome!', 'Login successful');
+                            setTimeout(function () { window.location.href = '/home'; }, 500);
+                        } else if (response.banned) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: '🚫 Account Banned',
+                                html: '<p class="mb-2">Your account has been suspended.</p><div class="alert alert-danger text-start p-2"><strong>Reason:</strong><br>' + (response.ban_reason || 'No reason provided.') + '</div><p class="small text-muted">If you believe this is a mistake, please contact support.</p>',
+                                confirmButtonColor: '#696cff',
+                                confirmButtonText: 'OK'
+                            });
+                        } else {
+                            alertEl.className = 'alert alert-danger mb-3';
+                            alertEl.textContent = response.message || 'Login failed';
+                            alertEl.style.display = 'block';
+                        }
+                    },
+                    error: function () {
+                        btn.disabled = false;
+                        btn.querySelector('.btn-text').textContent = 'Sign In';
+                        btn.querySelector('.spinner-border').classList.add('d-none');
+                        alertEl.className = 'alert alert-danger mb-3';
+                        alertEl.textContent = 'Connection error. Please try again.';
+                        alertEl.style.display = 'block';
+                    }
+                });
+                return false;
+            }
+
+            // Register Form
+            if (e.target.id === 'registerForm') {
+                e.preventDefault();
+                e.stopPropagation();
+
+                var firstName = document.getElementById('reg_first_name').value.trim();
+                var lastName = document.getElementById('reg_last_name').value.trim();
+                var username = document.getElementById('reg_username').value.trim();
+                var email = document.getElementById('reg_email').value.trim();
+                var password = document.getElementById('reg_password').value;
+                var confirmPassword = document.getElementById('reg_confirm_password').value;
+                var alertEl = document.getElementById('registerAlert');
+                var btn = document.getElementById('registerBtn');
+
+                if (!firstName || !username || !email || !password || !confirmPassword) {
+                    alertEl.className = 'alert alert-danger mb-3';
+                    alertEl.textContent = 'Please fill in all required fields';
+                    alertEl.style.display = 'block';
+                    return false;
+                }
+                if (password !== confirmPassword) {
+                    alertEl.className = 'alert alert-danger mb-3';
+                    alertEl.textContent = 'Passwords do not match';
+                    alertEl.style.display = 'block';
+                    return false;
+                }
+                if (password.length < 6) {
+                    alertEl.className = 'alert alert-danger mb-3';
+                    alertEl.textContent = 'Password must be at least 6 characters';
+                    alertEl.style.display = 'block';
+                    return false;
+                }
+                if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+                    alertEl.className = 'alert alert-danger mb-3';
+                    alertEl.textContent = 'Username can only contain letters, numbers, and underscores';
+                    alertEl.style.display = 'block';
+                    return false;
+                }
+
+                alertEl.style.display = 'none';
+                btn.disabled = true;
+                btn.querySelector('.btn-text').textContent = 'Creating account...';
+                btn.querySelector('.spinner-border').classList.remove('d-none');
+
+                $.ajax({
+                    url: 'handlers/auth.php',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { action: 'register', first_name: firstName, last_name: lastName, username: username, email: email, password: password },
+                    success: function (response) {
+                        if (response.success) {
+                            showToast('success', 'Welcome!', 'Account created successfully');
+                            setTimeout(function () { window.location.href = '/home'; }, 500);
+                        } else {
+                            alertEl.className = 'alert alert-danger mb-3';
+                            alertEl.textContent = response.message || 'Registration failed';
+                            alertEl.style.display = 'block';
+                            btn.disabled = false;
+                            btn.querySelector('.btn-text').textContent = 'Create Account';
+                            btn.querySelector('.spinner-border').classList.add('d-none');
+                        }
+                    },
+                    error: function () {
+                        alertEl.className = 'alert alert-danger mb-3';
+                        alertEl.textContent = 'Connection error. Please try again.';
+                        alertEl.style.display = 'block';
+                        btn.disabled = false;
+                        btn.querySelector('.btn-text').textContent = 'Create Account';
+                        btn.querySelector('.spinner-border').classList.add('d-none');
+                    }
+                });
+                return false;
+            }
+
+            // Forgot Password Form
+            if (e.target.id === 'forgotForm') {
+                e.preventDefault();
+                e.stopPropagation();
+
+                var email = document.getElementById('forgot_email').value.trim();
+                var alertEl = document.getElementById('forgotAlert');
+                var btn = document.getElementById('forgotBtn');
+
+                if (!email) {
+                    alertEl.className = 'alert alert-danger mb-3';
+                    alertEl.textContent = 'Please enter your email address';
+                    alertEl.style.display = 'block';
+                    return false;
+                }
+
+                alertEl.style.display = 'none';
+                btn.disabled = true;
+                btn.querySelector('.btn-text').textContent = 'Sending...';
+                btn.querySelector('.spinner-border').classList.remove('d-none');
+
+                $.ajax({
+                    url: 'handlers/auth.php',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { action: 'forgot_password', email: email },
+                    success: function (response) {
+                        btn.disabled = false;
+                        btn.querySelector('.btn-text').textContent = 'Send Verification Code';
+                        btn.querySelector('.spinner-border').classList.add('d-none');
+
+                        if (response.success) {
+                            document.getElementById('reset_email').value = email;
+                            document.getElementById('step1').style.display = 'none';
+                            document.getElementById('step2').style.display = 'block';
+                            showToast('success', 'Code Sent', 'Please check your email for the verification code');
+                        } else {
+                            alertEl.className = 'alert alert-danger mb-3';
+                            alertEl.textContent = response.message;
+                            alertEl.style.display = 'block';
+                        }
+                    },
+                    error: function () {
+                        btn.disabled = false;
+                        btn.querySelector('.btn-text').textContent = 'Send Verification Code';
+                        btn.querySelector('.spinner-border').classList.add('d-none');
+                        alertEl.className = 'alert alert-danger mb-3';
+                        alertEl.textContent = 'Connection error. Please try again.';
+                        alertEl.style.display = 'block';
+                    }
+                });
+                return false;
+            }
+
+            // Reset Password Form
+            if (e.target.id === 'resetForm') {
+                e.preventDefault();
+                e.stopPropagation();
+
+                var email = document.getElementById('reset_email').value;
+                var code = document.getElementById('reset_code').value.trim();
+                var newPassword = document.getElementById('reset_new_password').value;
+                var confirmPassword = document.getElementById('reset_confirm_password').value;
+                var alertEl = document.getElementById('resetAlert');
+                var btn = document.getElementById('resetBtn');
+
+                if (!code || !newPassword || !confirmPassword) {
+                    alertEl.className = 'alert alert-danger mb-3';
+                    alertEl.textContent = 'Please fill in all fields';
+                    alertEl.style.display = 'block';
+                    return false;
+                }
+                if (newPassword.length < 6) {
+                    alertEl.className = 'alert alert-danger mb-3';
+                    alertEl.textContent = 'Password must be at least 6 characters';
+                    alertEl.style.display = 'block';
+                    return false;
+                }
+                if (newPassword !== confirmPassword) {
+                    alertEl.className = 'alert alert-danger mb-3';
+                    alertEl.textContent = 'Passwords do not match';
+                    alertEl.style.display = 'block';
+                    return false;
+                }
+
+                alertEl.style.display = 'none';
+                btn.disabled = true;
+                btn.querySelector('.btn-text').textContent = 'Resetting...';
+                btn.querySelector('.spinner-border').classList.remove('d-none');
+
+                $.ajax({
+                    url: 'handlers/auth.php',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { action: 'reset_password', email: email, reset_code: code, new_password: newPassword },
+                    success: function (response) {
+                        btn.disabled = false;
+                        btn.querySelector('.btn-text').textContent = 'Reset Password';
+                        btn.querySelector('.spinner-border').classList.add('d-none');
+
+                        if (response.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Password Reset!',
+                                text: response.message,
+                                confirmButtonColor: '#696cff',
+                                confirmButtonText: 'Go to Login'
+                            }).then(function () { loadPage(null, 'login', 'Login'); });
+                        } else {
+                            alertEl.className = 'alert alert-danger mb-3';
+                            alertEl.textContent = response.message;
+                            alertEl.style.display = 'block';
+                        }
+                    },
+                    error: function () {
+                        btn.disabled = false;
+                        btn.querySelector('.btn-text').textContent = 'Reset Password';
+                        btn.querySelector('.spinner-border').classList.add('d-none');
+                        alertEl.className = 'alert alert-danger mb-3';
+                        alertEl.textContent = 'Connection error. Please try again.';
+                        alertEl.style.display = 'block';
+                    }
+                });
+                return false;
+            }
+        });
+
+        // Photo upload handlers (delegation)
+        document.addEventListener('change', function (e) {
+            if (e.target.id === 'quickPhotoInput') {
+                var file = e.target.files[0];
+                if (!file) return;
+                if (file.size > 5 * 1024 * 1024) {
+                    showToast('error', 'Error', 'File size must be less than 5MB');
+                    return;
+                }
+                var formData = new FormData();
+                formData.append('action', 'update_photo');
+                formData.append('photo', file);
+                $.ajax({
+                    url: 'handlers/user.php', type: 'POST', data: formData,
+                    processData: false, contentType: false, dataType: 'json',
+                    success: function (response) {
+                        if (response.success) {
+                            document.getElementById('profileImage').src = response.photo_url + '?t=' + Date.now();
+                            showToast('success', 'Success', 'Photo updated successfully');
+                        } else {
+                            showToast('error', 'Error', response.message || 'Failed to upload photo');
+                        }
+                    },
+                    error: function () { showToast('error', 'Error', 'Failed to upload photo'); }
+                });
+            }
+
+            if (e.target.id === 'photoInput') {
+                var file = e.target.files[0];
+                if (file) {
+                    if (file.size > 5 * 1024 * 1024) {
+                        showToast('error', 'Error', 'File size must be less than 5MB');
+                        e.target.value = '';
+                        return;
+                    }
+                    var reader = new FileReader();
+                    reader.onload = function (ev) { document.getElementById('previewImage').src = ev.target.result; };
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function () {
+
+            
+                    
+
+                    // Show ban dialog if user was force-logged-out
+                    if (typeof _banReason !== 'undefined' && _banReason) {
+                        setTimeout(function () {
+                            Swal.fire({
+                                icon: 'error',
+                                title: '🚫 Account Banned',
+                                html: '<p class="mb-2">Your account has been suspended and you have been logged out.</p><div class="alert alert-danger text-start p-2"><strong>Reason:</strong><br>' + _banReason + '</div><p class="small text-muted">If you believe this is a mistake, please contact support.</p>',
+                                confirmButtonColor: '#696cff',
+                                confirmButtonText: 'OK'
+                            });
+                        }, 1200);
+                    }
+                
+        });
+    </script>
+    <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'9e35ba49abfd71f4',t:'MTc3NDY5MTM5Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+    <script defer
+        src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516"
+        integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg=="
+        data-cf-beacon='{"version":"2024.11.0","token":"a266c0c186aa4ce3bb798fd6e18b05f6","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}'
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

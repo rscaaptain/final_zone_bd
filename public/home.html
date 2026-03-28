@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-navbar-full layout-horizontal layout-without-menu" dir="ltr"
+    data-theme="theme-bordered" data-assets-path="https://cdn-bt4team.pages.dev/assets/"
+    data-template="horizontal-menu-template" data-style="light">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title id="page-title">%%SITE_NAME%%</title>
+
+    <link rel="icon" href="%%FAV_ICON%%" type="image/x-icon">
+    <link rel="apple-touch-icon" href="%%SITE_LOGO%%">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/vendor/fonts/fontawesome.css" />
+    <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/vendor/fonts/tabler-icons.css" />
+
+    <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/vendor/css/rtl/core.css" />
+    <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/vendor/css/rtl/theme-default.css" />
+    <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/css/demo.css" />
+
+    <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/vendor/libs/node-waves/node-waves.css" />
+    <link rel="stylesheet"
+        href="https://cdn-bt4team.pages.dev/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/vendor/libs/swiper/swiper.css" />
+    <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/vendor/libs/toastr/toastr.css" />
+
+    <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/vendor/css/pages/cards-advance.css" />
+
+    <script src="https://cdn-bt4team.pages.dev/assets/vendor/js/helpers.js"></script>
+    <script src="https://cdn-bt4team.pages.dev/assets/vendor/js/template-customizer.js"></script>
+    <script src="https://cdn-bt4team.pages.dev/assets/js/config.js"></script>
+
+    <style>
+        #splashScreen {
+            position: fixed;
+            inset: 0;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            background-repeat: no-repeat;
+            background-position: center 30%;
+            background-size: 200px 200px;
+        }
+
+        #splashScreen::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.82);
+        }
+
+        #splashScreen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .splash-content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .splash-logo-img {
+            width: 88px;
+            height: 88px;
+            margin-bottom: 18px;
+        }
+
+        .splash-title {
+            color: #2c2c3e;
+            font-size: 1.55rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        .splash-subtitle {
+            color: #888;
+            font-size: 0.82rem;
+            margin-top: 3px;
+        }
+
+        .splash-loader {
+            margin-top: 32px;
+            display: flex;
+            gap: 7px;
+        }
+
+        .splash-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #696cff;
+            opacity: 0.3;
+            animation: splashBounce 1.2s infinite;
+        }
+
+        .splash-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .splash-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes splashPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 8px 32px rgba(105, 108, 255, 0.22);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 12px 40px rgba(105, 108, 255, 0.35);
+            }
+        }
+
+        @keyframes splashBounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.3;
+            }
+
+            50% {
+                transform: translateY(-7px);
+                opacity: 1;
+            }
+        }
+
+        .progress-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            z-index: 9999;
+            display: none;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #696cff 0%, #5f61e6 50%, #696cff 100%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            transition: width 0.2s ease;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        #bottomNav {
+            display: block;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #fffbff;
+            border-top: none;
+            box-shadow: 0 -1px 0 0 #e0e0e0, 0 -4px 16px rgba(0, 0, 0, 0.07);
+            z-index: 1100;
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        #bottomNav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            height: 64px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #bottomNav .nav-item {
+            flex: 1;
+        }
+
+        #bottomNav .nav-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 4px 0;
+            color: #49454f;
+            text-decoration: none;
+            position: relative;
+            transition: color 0.2s;
+            gap: 2px;
+        }
+
+        #bottomNav .nav-link .nav-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #bottomNav .nav-link i {
+            font-size: 1.3rem;
+            transition: transform 0.2s;
+        }
+
+        #bottomNav .nav-link span {
+            font-size: 0.68rem;
+            font-weight: 500;
+            letter-spacing: 0.03em;
+        }
+
+        #bottomNav .nav-link.active {
+            color: #696cff;
+        }
+
+        #bottomNav .nav-link.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 32px;
+            height: 3px;
+            background: #696cff;
+            border-radius: 0 0 4px 4px;
+        }
+
+        #bottomNav .nav-link.active i {
+            transform: scale(1.1);
+        }
+
+        #bottomNav .nav-link.active span {
+            font-weight: 700;
+        }
+
+        .content-wrapper {
+            padding-top: 60px;
+            padding-bottom: 74px;
+        }
+
+        .category-card {
+            box-shadow: none !important;
+            transition: none !important;
+        }
+
+        .category-card:hover,
+        .category-card:focus {
+            box-shadow: none !important;
+            transform: none !important;
+        }
+
+        .category-card-img-wrap {
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .category-card-img-wrap img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            display: block;
+        }
+
+        #bannerSlider {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            height: 300px;
+        }
+
+        @media (max-width: 768px) {
+            #bannerSlider {
+                height: 160px;
+            }
+        }
+
+        #bannerSlider .swiper-slide {
+            overflow: hidden;
+        }
+
+        #bannerSlider .swiper-slide img,
+        #bannerSlider .swiper-slide a img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .category-name {
+            font-size: 0.88rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-weight: 700;
+            padding-top: 32px;
+            padding-bottom: 32px;
+            color: #49454f;
+        }
+
+        #content-area {
+            animation: fadeIn 0.2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .layout-navbar.navbar {
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1030;
+            background: rgba(255, 255, 255, 0.8) !important;
+            backdrop-filter: blur(8px);
+            box-shadow: none;
+            border-bottom: 1px solid #ebe9f1;
+        }
+
+        .balance-badge {
+            background: linear-gradient(135deg, #696cff 0%, #5f61e6 100%);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 576px) {
+            .toast-top-right {
+                top: 12px;
+                right: 12px;
+            }
+        }
+
+        .cursor-pointer {
+            cursor: pointer;
+        }
+
+        .guest-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 500;
+            cursor: pointer;
+        }
+
+        .category-card {
+            border-radius: 12px;
+            border: 1px solid #ebe9f1;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .category-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-banner {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .hero-banner img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="splashScreen">
+        <div class="splash-content">
+            <img src="%%SITE_LOGO%%" class="splash-logo-img" alt="%%SITE_NAME%%" id="splashLogo">
+            <div class="splash-loader">
+                <div class="splash-dot"></div>
+                <div class="splash-dot"></div>
+                <div class="splash-dot"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="noticeModal"
+        style="display:none; position:fixed; inset:0; z-index:999999; background:rgba(0,0,0,0.55); align-items:center; justify-content:center; padding:16px;">
+        <div
+            style="background:#fff; border-radius:14px; max-width:400px; width:100%; overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,0.18);">
+            <div style="background:#696cff; padding:16px 20px; display:flex; align-items:center; gap:10px;">
+                <i class="ti ti-bell-ringing" style="font-size:1.3rem; color:#fff;"></i>
+                <span style="color:#fff; font-weight:700; font-size:1rem;">গুরুত্বপূর্ণ নোটিশ</span>
+            </div>
+            <div style="padding:20px; color:#3a3a4a; font-size:0.93rem; line-height:1.75; white-space:pre-wrap;" id="noticeContent"></div>
+            <div style="padding:0 20px 20px;">
+                <button onclick="document.getElementById('noticeModal').style.display='none';"
+                    style="width:100%; background:#696cff; color:#fff; border:none; border-radius:8px; padding:10px; font-size:0.95rem; font-weight:600; cursor:pointer;">
+                    ঠিক আছে
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-loader">
+        <div class="progress-bar"></div>
+    </div>
+
+    <div class="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu">
+        <div class="layout-container">
+
+            <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
+                <div class="container-xxl">
+                    <a href="/home" class="app-brand-text demo menu-text fw-bold text-decoration-none"
+                        style="display:flex; align-items:center; gap:8px; text-decoration:none; font-weight:700; font-size:1rem; color:inherit; flex-shrink:0;">
+                        <img src="/uploads/settings/logo.png" alt="Rs Captain" class="pyhost-brand-img"
+                            style="width:30px; height:30px; border-radius:6px;" id="navLogo">
+
+                        <span class="pyhost-brand-text site-name-text" style="color: #696cff;">%%SITE_NAME%%</span>
+                    </a>
+
+                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                        <ul class="navbar-nav flex-row align-items-center ms-auto gap-2" id="navAuthLinks">
+                            <li class="nav-item d-flex gap-2">
+                                <a href="/login" class="btn btn-sm btn-primary cursor-pointer">Login</a>
+                                <a href="/register" class="btn btn-sm btn-outline-primary cursor-pointer">Register</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="layout-page">
+                <div class="content-wrapper">
+                    <div class="container-xxl flex-grow-1 container-p-y layout-content-parse" id="content-area">
+                        <div class="alert d-flex align-items-center mb-4 mt-2" role="alert" id="welcomeAlert"
+                            style="background-color: #e7e7ff; border: none; border-radius: 8px; padding: 12px 16px; color: #696cff;">
+                            <i class="ti ti-login me-3" style="font-size: 1.3rem;"></i>
+                            <div id="welcomeAlertText" style="font-size: 13px; line-height: 1.5;">
+                                <span class="fw-bold">Welcome to <span
+                                        class="site-name-text">%%SITE_NAME%%</span>!</span> — <a href="/login"
+                                    class="fw-bold text-decoration-none" style="color: #696cff;">Login</a> or <a
+                                    href="/register" class="fw-bold text-decoration-none"
+                                    style="color: #696cff;">Register</a> to join matches.
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div>
+                                <h4 class="mb-1" style="font-size: 1.25rem; font-weight: 700;">Tournaments 🏆</h4>
+                                <p class="text-muted mb-0" style="font-size: 0.85rem;">Browse available categories</p>
+                            </div>
+                        </div>
+
+                        <div id="bannerSlider" class="swiper hero-banner mb-3">
+                            <div class="swiper-wrapper" id="sliderWrapper">
+                                <div class="swiper-slide">
+                                    <img src="https://i.ibb.co.com/q3qTfbXR/free-fire-thumbnail-300x300.png"
+                                        alt="Banner">
+                                </div>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+
+                        <h6 class="text-muted"><i class="ti ti-layout-grid me-1"></i>Categories</h6>
+
+                        <div class="row g-3" id="categoriesWrapper">
+                            <div class="text-center py-4 text-muted">
+                                <div class="spinner-border text-primary mb-2" role="status"></div>
+                                <div>Loading categories...</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <footer class="content-footer footer bg-footer-theme">
+                        <div class="container-xxl">
+                            <div
+                                class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+                                <div class="text-body">
+                                    &copy;
+                                    <script>document.write(new Date().getFullYear())</script>
+                                    <a href="/" class="footer-link site-name-text cursor-pointer">%%SITE_NAME%%</a>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+
+        <nav id="bottomNav">
+            <ul>
+                <li class="nav-item">
+                    <a class="nav-link active cursor-pointer" href="/home">
+                        <span class="nav-indicator"><i class="ti ti-home"></i></span>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="nav-item" id="btnBtmLogin">
+                    <a class="nav-link cursor-pointer" href="/login">
+                        <span class="nav-indicator"><i class="ti ti-login"></i></span>
+                        <span>Login</span>
+                    </a>
+                </li>
+                <li class="nav-item" id="btnBtmRegister">
+                    <a class="nav-link cursor-pointer" href="/register">
+                        <span class="nav-indicator"><i class="ti ti-user-plus"></i></span>
+                        <span>Register</span>
+                    </a>
+                </li>
+                <li class="nav-item" id="btnBtmResults">
+                    <a class="nav-link cursor-pointer" href="/results">
+                        <span class="nav-indicator"><i class="ti ti-trophy"></i></span>
+                        <span>Results</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <script src="https://cdn-bt4team.pages.dev/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="https://cdn-bt4team.pages.dev/assets/vendor/libs/popper/popper.js"></script>
+    <script src="https://cdn-bt4team.pages.dev/assets/vendor/js/bootstrap.js"></script>
+    <script src="https://cdn-bt4team.pages.dev/assets/vendor/libs/swiper/swiper.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            setTimeout(function () {
+                var sc = document.getElementById('splashScreen');
+                if (sc) sc.classList.add('hidden');
+            }, 1000);
+
+            loadSettings();
+            checkSession();
+            loadContent();
+        });
+
+        async function loadContent() {
+            try {
+                // Notice
+                const rn = await fetch('/api/notices');
+                const dn = await rn.json();
+                if (dn.success && dn.notice) {
+                    const noticeEl = document.getElementById('noticeModal');
+                    if (noticeEl) {
+                        noticeEl.querySelector('.ti-bell-ringing').nextElementSibling.textContent = dn.notice.title;
+                        const formattedNotice = dn.notice.content.replace(/\\n/g, '<br>').replace(/\n/g, '<br>');
+                        document.getElementById('noticeContent').innerHTML = formattedNotice;
+                        setTimeout(() => {
+                            noticeEl.style.display = 'flex';
+                        }, 1000);
+                    }
+                } else {
+                     const noticeEl = document.getElementById('noticeModal');
+                     if (noticeEl) noticeEl.style.display = 'none';
+                }
+
+                const r1 = await fetch('/api/sliders');
+                const d1 = await r1.json();
+                if (d1.success && d1.sliders && d1.sliders.length > 0) {
+                    let html = '';
+                    d1.sliders.forEach(s => {
+                        html += '<div class="swiper-slide">' +
+                            (s.link_url !== '#' ? `<a href="${s.link_url}" style="display:block; width:100%; height:100%;">` : '') +
+                            `<img src="${s.image_url}" alt="Slider">` +
+                            (s.link_url !== '#' ? `</a>` : '') +
+                            '</div>';
+                    });
+                    document.getElementById('sliderWrapper').innerHTML = html;
+                    if (typeof Swiper !== 'undefined') {
+                        new Swiper('#bannerSlider', {
+                            loop: true,
+                            autoplay: { delay: 3000, disableOnInteraction: false },
+                            pagination: { el: '.swiper-pagination', clickable: true },
+                            observer: true,
+                            observeParents: true
+                        });
+                    }
+                }
+
+                const r2 = await fetch('/api/categories');
+                const d2 = await r2.json();
+                if (d2.success && d2.categories && d2.categories.length > 0) {
+                    let html = '';
+                    d2.categories.forEach(c => {
+                        let img = c.image_url || 'https://i.ibb.co.com/q3qTfbXR/free-fire-thumbnail-300x300.png';
+                        html += `
+                            <div class="col-6 col-md-3">
+                                <div class="category-card" onclick="window.location.href='/matches?category=${encodeURIComponent(c.name)}'">
+                                    <div class="category-card-img-wrap">
+                                        <img src="${img}" alt="${c.name}">
+                                    </div>
+                                    <div class="category-name text-center text-uppercase">${c.name}</div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    document.getElementById('categoriesWrapper').innerHTML = html;
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        async function checkSession() {
+            try {
+                const r = await fetch('/api/session');
+                const d = await r.json();
+                if (d.loggedIn && d.user) {
+                    const navAuth = document.getElementById('navAuthLinks');
+                    if (navAuth) {
+                        navAuth.innerHTML = '<li class="nav-item d-flex gap-2"><div class="balance-badge"><i class="ti ti-wallet me-1"></i>৳' + parseFloat(d.user.balance).toFixed(2) + '</div><a href="/profile" class="btn btn-sm btn-outline-primary"><i class="ti ti-user me-1"></i>Profile</a><a href="/api/auth/logout" class="btn btn-sm btn-danger px-2"><i class="ti ti-logout"></i></a></li>';
+                    }
+                    const alertBox = document.getElementById('welcomeAlert');
+                    if (alertBox) alertBox.style.display = 'none';
+
+                    document.getElementById('btnBtmLogin').style.display = 'none';
+                    document.getElementById('btnBtmRegister').style.display = 'none';
+
+                    const bottomNavUl = document.querySelector('#bottomNav ul');
+                    const profileLi = document.createElement('li');
+                    profileLi.className = 'nav-item';
+                    profileLi.innerHTML = '<a class="nav-link" href="/profile"><span class="nav-indicator"><i class="ti ti-user"></i></span><span>Profile</span></a>';
+                    bottomNavUl.appendChild(profileLi);
+                }
+            } catch (e) { }
+        }
+
+        async function loadSettings() {
+            try {
+                const r = await fetch('/api/settings');
+                const d = await r.json();
+                if (d.success && d.settings) {
+                    const s = d.settings;
+                    document.title = s.site_name;
+                    document.querySelectorAll('.site-name-text').forEach(el => el.textContent = s.site_name);
+                    const navLogo = document.getElementById('navLogo');
+                    if (navLogo) { navLogo.src = s.site_logo; navLogo.alt = s.site_name; }
+                    const splashLogo = document.getElementById('splashLogo');
+                    if (splashLogo) { splashLogo.src = s.site_logo; splashLogo.alt = s.site_name; }
+                }
+            } catch (e) { }
+        }
+    </script>
+</body>
+
+</html>

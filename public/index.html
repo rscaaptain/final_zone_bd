@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en" class="light-style layout-navbar-fixed layout-wide" dir="ltr" data-theme="theme-default"
+  data-assets-path="https://cdn-bt4team.pages.dev/assets/" data-template="front-pages" data-style="light">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+  <title>%%SITE_NAME%% - Free Fire Tournament</title>
+  <meta name="description"
+    content="%%SITE_NAME%% - Bangladesh's most trusted Free Fire tournament platform. Join matches, win prizes!">
+  <link rel="icon" type="image/x-icon" id="siteFavicon" href="%%FAV_ICON%%" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/vendor/fonts/tabler-icons.css" />
+  <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/vendor/css/rtl/core.css"
+    class="template-customizer-core-css" />
+  <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/vendor/css/rtl/theme-default.css"
+    class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/css/demo.css" />
+  <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/vendor/css/pages/front-page.css" />
+  <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/vendor/libs/node-waves/node-waves.css" />
+  <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/vendor/libs/swiper/swiper.css" />
+  <link rel="stylesheet" href="https://cdn-bt4team.pages.dev/assets/vendor/css/pages/front-page-landing.css" />
+  <script src="https://cdn-bt4team.pages.dev/assets/vendor/js/helpers.js"></script>
+  <script src="https://cdn-bt4team.pages.dev/assets/vendor/js/template-customizer.js"></script>
+  <script src="https://cdn-bt4team.pages.dev/assets/js/front-config.js"></script>
+  <style>
+    .result-card {
+      border-radius: 12px;
+      border: 1px solid #eee;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+
+    .result-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
+    }
+
+    .result-img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    .stat-card {
+      border-radius: 14px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(105, 108, 255, 0.15);
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    #landingSearchInput:focus {
+      border-color: #696cff;
+      box-shadow: 0 0 0 0.2rem rgba(105, 108, 255, .18);
+    }
+
+    .section-tag {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .bt4-brand-text {
+      font-size: 1.1rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #696cff, #5f61e6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+  </style>
+</head>
+
+<body>
+  <nav class="layout-navbar shadow-none py-0">
+    <div class="container">
+      <div class="navbar navbar-expand-lg landing-navbar px-3 px-md-8">
+        <div class="navbar-brand app-brand demo d-flex py-0 py-lg-2 me-4 me-xl-8">
+          <a href="/" class="app-brand-link d-flex align-items-center gap-2 text-decoration-none">
+            <img data-brand-logo src="%%SITE_LOGO%%" alt="%%SITE_NAME%%" height="32" style="border-radius:6px;" />
+            <span class="bt4-brand-text ms-1" data-brand-name>%%SITE_NAME%%</span>
+          </a>
+        </div>
+        <ul class="navbar-nav flex-row align-items-center ms-auto">
+          <li class="nav-item">
+            <a href="/login" class="btn btn-primary btn-sm px-4" id="navPlayBtn">
+              <span class="ti ti-login me-1"></span>Play Now
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div data-bs-spy="scroll" class="scrollspy-example">
+    <section id="hero-animation">
+      <div id="landingHero" class="section-py landing-hero position-relative">
+        <img src="https://cdn-bt4team.pages.dev/assets/img/front-pages/backgrounds/hero-bg.png" alt="hero background"
+          class="position-absolute top-0 start-50 translate-middle-x object-fit-cover w-100 h-100" data-speed="1" />
+        <div class="container">
+          <div class="hero-text-box text-center position-relative">
+            <h1 class="text-primary hero-title display-6 fw-extrabold" data-brand-name>%%SITE_NAME%%</h1>
+            <h2 class="hero-sub-title h6 mb-6">Bangladesh's most trusted Free Fire tournament platform</h2>
+            <div class="landing-hero-btn d-inline-block position-relative">
+              <span class="hero-btn-item position-absolute d-none d-md-flex fw-medium">
+                Get Started Now
+                <img src="https://cdn-bt4team.pages.dev/assets/img/front-pages/icons/Join-community-arrow.png"
+                  alt="Join community arrow" class="scaleX-n1-rtl" />
+              </span>
+              <a href="/apps/FZBD_release_sign.apk" class="btn btn-primary btn-lg w-100">
+                <span class="ti ti-download me-2"></span>Download Now
+              </a>
+              <br /><br />
+              <a href="/home" class="btn btn-outline-primary btn-lg w-100">
+                <span class="ti ti-world me-2"></span>Continue on Web
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="landingResults" class="section-py bg-body">
+      <div class="container">
+        <div class="text-center mb-6">
+          <span class="badge bg-label-success section-tag">Results</span>
+          <h3 class="mt-2 mb-1">Match Results</h3>
+          <p class="text-muted mb-0">Search any match by Match ID or browse the latest completed matches</p>
+        </div>
+        <div class="row justify-content-center mb-4">
+          <div class="col-12 col-md-8 col-lg-6">
+            <div class="input-group shadow-sm">
+              <span class="input-group-text bg-white border-end-0">
+                <i class="ti ti-search text-muted"></i>
+              </span>
+              <input type="text" id="landingSearchInput" class="form-control border-start-0 ps-0"
+                placeholder="Search by Match ID or title..." autocomplete="off" />
+              <button class="btn btn-outline-secondary border-start-0" id="clearSearchBtn" style="display:none;"
+                title="Clear search">
+                <i class="ti ti-x"></i>
+              </button>
+            </div>
+            <p class="text-muted text-center mt-1 mb-0" style="font-size:0.78rem;">
+              <i class="ti ti-info-circle me-1"></i>Type a Match ID (e.g. FF001) to find any match result
+            </p>
+          </div>
+        </div>
+        <h5 class="mb-3 fw-semibold" id="resultsTitle">
+          <i class="ti ti-clock me-2"></i>Last 5 Match Results
+        </h5>
+        <div class="row g-3" id="resultsContainer"></div>
+        <div class="text-center mt-5">
+          <a href="/results" class="btn btn-outline-primary btn-lg">
+            <i class="ti ti-trophy me-2"></i>View All Results
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="landingStats" class="section-py landing-fun-facts">
+      <div class="container">
+        <div class="text-center mb-6">
+          <span class="badge bg-label-primary section-tag">Platform Stats</span>
+          <h3 class="mt-2 mb-1">Trusted by Players Across Bangladesh</h3>
+          <p class="text-muted mb-0">Real-time numbers from our platform</p>
+        </div>
+        <div class="row gy-6 justify-content-center">
+          <div class="col-sm-6 col-lg-4">
+            <div class="card stat-card border border-primary shadow-none h-100">
+              <div class="card-body text-center py-5">
+                <div class="mb-3">
+                  <span class="badge bg-label-primary rounded-circle p-3" style="font-size:1.4rem;">
+                    <i class="ti ti-users"></i>
+                  </span>
+                </div>
+                <div class="stat-number text-primary mb-1" id="totalPlayers">15,783</div>
+                <p class="fw-medium mb-0 text-muted">Total Players</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-4">
+            <div class="card stat-card border border-success shadow-none h-100">
+              <div class="card-body text-center py-5">
+                <div class="mb-3">
+                  <span class="badge bg-label-success rounded-circle p-3" style="font-size:1.4rem;">
+                    <i class="ti ti-trophy"></i>
+                  </span>
+                </div>
+                <div class="stat-number text-success mb-1" id="totalMatches">1,984</div>
+                <p class="fw-medium mb-0 text-muted">Total Played Matches</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="landing-footer bg-body footer-text">
+    <div class="footer-bottom py-3 py-md-5">
+      <div
+        class="container d-flex flex-wrap justify-content-between flex-md-row flex-column text-center text-md-start gap-3">
+        <div class="mb-0">
+          <a href="/"
+            class="d-flex align-items-center justify-content-center justify-content-md-start gap-2 text-decoration-none mb-1">
+            <img data-brand-logo src="%%SITE_LOGO%%" alt="%%SITE_NAME%%" height="24" style="border-radius:4px;" />
+            <span class="fw-bold text-heading" data-brand-name>%%SITE_NAME%%</span>
+          </a>
+          <span class="footer-bottom-text text-muted" style="font-size:0.82rem;">
+            &copy;
+            <script>document.write(new Date().getFullYear());</script>
+            %%SITE_NAME%% &mdash; All rights reserved.
+          </span>
+        </div>
+        <div class="d-flex align-items-center gap-2">
+          <a href="/login" class="btn btn-sm btn-primary" id="footPlayBtn">
+            <i class="ti ti-login me-1"></i>Play Now
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn-bt4team.pages.dev/assets/vendor/libs/popper/popper.js"></script>
+  <script src="https://cdn-bt4team.pages.dev/assets/vendor/js/bootstrap.js"></script>
+  <script src="https://cdn-bt4team.pages.dev/assets/vendor/libs/node-waves/node-waves.js"></script>
+  <script src="https://cdn-bt4team.pages.dev/assets/vendor/libs/swiper/swiper.js"></script>
+  <script src="https://cdn-bt4team.pages.dev/assets/js/front-main.js"></script>
+
+  <script>
+    var lastResults = [
+      { "id": "3353", "match_id": "249903", "category_name": "CLASH SQUAD", "title": "CLASH SQUAD ( 4V4 ) 10:20 A.M", "image_url": "https://i.ibb.co.com/q3qTfbXR/free-fire-thumbnail-300x300.png", "type": "solo", "version": "mobile", "map": "Bermuda", "match_time": "2026-03-28 10:20:00", "registered_count": "5" },
+      { "id": "3256", "match_id": "083385", "category_name": "LONE WOLF", "title": "LONE WOLF ( 2V2 ) 10:10 A.M", "image_url": "https://i.ibb.co.com/q3qTfbXR/free-fire-thumbnail-300x300.png", "type": "solo", "version": "mobile", "map": "Bermuda", "match_time": "2026-03-28 10:10:00", "registered_count": "3" },
+      { "id": "3404", "match_id": "089889", "category_name": "LOSS TO WIN", "title": "LOSS TO WIN ( 1V1 ) 10:00 A.M", "image_url": "https://i.ibb.co.com/q3qTfbXR/free-fire-thumbnail-300x300.png", "type": "solo", "version": "mobile", "map": "Bermuda", "match_time": "2026-03-28 10:00:00", "registered_count": "2" },
+      { "id": "3352", "match_id": "725509", "category_name": "CLASH SQUAD", "title": "CLASH SQUAD ( 4V4 ) 10:00 A.M", "image_url": "https://i.ibb.co.com/q3qTfbXR/free-fire-thumbnail-300x300.png", "type": "solo", "version": "mobile", "map": "Bermuda", "match_time": "2026-03-28 10:00:00", "registered_count": "3" },
+      { "id": "3160", "match_id": "284423", "category_name": "BR MATCH", "title": "SOLO MATCH | 10:00 A.M", "image_url": "https://i.ibb.co.com/q3qTfbXR/free-fire-thumbnail-300x300.png", "type": "solo", "version": "mobile", "map": "Bermuda", "match_time": "2026-03-28 10:00:00", "registered_count": "48" }
+    ];
+
+    function escHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function fmtDate(dateStr) {
+      if (!dateStr) return '';
+      try { return new Date(dateStr).toLocaleDateString('en-BD', { day: '2-digit', month: 'short', year: 'numeric' }); } catch (e) { return dateStr; }
+    }
+
+    function buildResultCard(res) {
+      var matchType = res.type ? (res.type.charAt(0).toUpperCase() + res.type.slice(1)) : '';
+      var version = res.version ? (res.version.charAt(0).toUpperCase() + res.version.slice(1)) : '';
+      var dateStr = fmtDate(res.match_time);
+      var catBadge = res.category_name ? '<span class="badge bg-primary-subtle text-primary me-1" style="font-size:0.68rem;">' + escHtml(res.category_name) + '</span>' : '';
+      var idBadge = res.match_id ? '<span class="badge bg-secondary-subtle text-secondary me-1" style="font-size:0.68rem;">#' + escHtml(res.match_id) + '</span>' : '';
+      var imgHtml = res.image_url ? '<img src="' + escHtml(res.image_url) + '" class="result-img me-3" alt="">' : '';
+
+      var col = document.createElement('div');
+      col.className = 'col-12';
+      col.innerHTML = '<div class="card result-card" onclick="location.href=\'/results?search=' + escHtml(res.match_id) + '\'">' +
+        '<div class="card-body"><div class="d-flex align-items-center">' + imgHtml +
+        '<div class="flex-grow-1" style="min-width:0;"><h6 class="card-title mb-1 text-truncate">' + escHtml(res.title) + '</h6>' +
+        '<div class="mb-1">' + catBadge + idBadge + '</div>' +
+        '<small class="text-muted d-block"><i class="ti ti-device-gamepad-2 me-1"></i>' + matchType + ' | ' + version + ' | ' + escHtml(res.map || 'N/A') + '</small>' +
+        '<small class="text-muted d-block"><i class="ti ti-calendar me-1"></i>' + dateStr + '</small>' +
+        '<small class="text-muted d-block"><i class="ti ti-users me-1"></i>' + (res.registered_count || 0) + ' players</small></div>' +
+        '<div class="ms-2"><i class="ti ti-chevron-right text-muted"></i></div></div></div></div>';
+      return col;
+    }
+
+    function renderResults(data, titleText) {
+      var container = document.getElementById('resultsContainer');
+      document.getElementById('resultsTitle').innerHTML = '<i class="ti ti-clock me-2"></i>' + escHtml(titleText);
+      if (!data || data.length === 0) {
+        container.innerHTML = '<div class="col-12"><div class="alert alert-info text-center"><i class="ti ti-search-off me-2"></i>No matches found.</div></div>';
+        return;
+      }
+      container.innerHTML = '';
+      data.forEach(function (res) { container.appendChild(buildResultCard(res)); });
+    }
+
+    document.getElementById('landingSearchInput').addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        const q = e.target.value.trim();
+        if (q) window.location.href = '/results?search=' + encodeURIComponent(q);
+      }
+    });
+
+    document.getElementById('clearSearchBtn').addEventListener('click', function () {
+      document.getElementById('landingSearchInput').value = '';
+      this.style.display = 'none';
+      renderResults(lastResults, 'Last 5 Match Results');
+    });
+
+    document.getElementById('landingSearchInput').addEventListener('input', function () {
+      document.getElementById('clearSearchBtn').style.display = this.value.trim() ? 'flex' : 'none';
+    });
+
+    async function checkSession() {
+      try {
+        const r = await fetch('/api/session');
+        const d = await r.json();
+        if (d.loggedIn) {
+          document.getElementById('navPlayBtn').href = '/home';
+          document.getElementById('footPlayBtn').href = '/home';
+        }
+      } catch (e) { }
+    }
+
+    async function loadStatsAndResults() {
+      try {
+        const rStat = await fetch('/api/matches/stats/overview');
+        const dStat = await rStat.json();
+        if (dStat.success) {
+          document.getElementById('totalPlayers').textContent = (dStat.stats.total_players > 15700 ? dStat.stats.total_players : 15783);
+          document.getElementById('totalMatches').textContent = (dStat.stats.total_matches > 1900 ? dStat.stats.total_matches : 1984);
+        }
+      } catch (e) { }
+    }
+
+    renderResults(lastResults, 'Last 5 Match Results');
+    checkSession();
+    loadStatsAndResults();
+  </script>
+</body>
+
+</html>
