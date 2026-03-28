@@ -1,20 +1,29 @@
 const mysql = require('mysql2/promise');
 require('dotenv').config();
 
-const baseUri = 'mysql://3A6TaGgYi7CaDM1.root:f0RlCpVMzU7xMP5g@gateway01.eu-central-1.prod.aws.tidbcloud.com:4000';
-const sslQ = '?ssl={"rejectUnauthorized":true}';
+const dbConfig = {
+    host: 'gateway01.eu-central-1.prod.aws.tidbcloud.com',
+    port: 4000,
+    user: '3A6TaGgYi7CaDM1.root',
+    password: 'f0RlCpVMzU7xMP5g',
+    ssl: { rejectUnauthorized: true },
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+};
 
-// URI for app pool -> specific to your DB (final_zone_bd)
-const appDbUri = baseUri + '/final_zone_bd' + sslQ;
-
-// URI for initial setup -> connects to sys because final_zone_bd may not exist yet
-const setupDbUri = baseUri + '/sys' + sslQ + '&multipleStatements=true';
-
-const pool = mysql.createPool(appDbUri);
+const pool = mysql.createPool({
+    ...dbConfig,
+    database: 'final_zone_bd'
+});
 
 async function initializeDatabase() {
     try {
-        const conn = await mysql.createConnection(setupDbUri);
+        const conn = await mysql.createConnection({
+            ...dbConfig,
+            database: 'sys',
+            multipleStatements: true
+        });
 
         await conn.query(`CREATE DATABASE IF NOT EXISTS \`final_zone_bd\``);
         await conn.query(`USE \`final_zone_bd\``);
@@ -22,7 +31,6 @@ async function initializeDatabase() {
             await conn.query('ALTER TABLE users DROP COLUMN role');
         } catch (e) { }
         try {
-
             await conn.query('DROP TABLE IF EXISTS settings');
         } catch (e) { }
 
@@ -147,12 +155,6 @@ async function initializeDatabase() {
                 ('fav_icon', 'https://finalzonebd.com/logo/logo.png'),
                 ('home_notice', 'আপনি BR (Classic) ম্যাচে নির্ধারিত স্লোটে থাকুন। বাহিরের প্লেয়ারকে ইনভাইট করবেন না। অন্যথায় কিক করা হবে। ধন্যবাদ।');
             `);
-        } else {
-            await conn.query(`
-                INSERT INTO settings (setting_name, setting_value) VALUES
-                ('home_notice', 'আপনি BR (Classic) ম্যাচে নির্ধারিত স্লোটে থাকুন। বাহিরের প্লেয়ারকে ইনভাইট করবেন না। অন্যথায় কিক করা হবে। ধন্যবাদ।')
-                ON DUPLICATE KEY UPDATE setting_name=setting_name;
-            `);
         }
 
         const [sliderRows] = await conn.query('SELECT COUNT(*) as cnt FROM sliders');
@@ -182,21 +184,21 @@ async function initializeDatabase() {
         if (rows[0].cnt === 0) {
             await conn.query(`
                 INSERT INTO matches (title, match_uid, category_id, category, entry_fee, prize_pool, per_kill, slots, filled_slots, status, scheduled_at) VALUES
-                ('FINAL ZONE BD #001', 'FZ001', 1, 'BR Match', 20, 500, 5, 12, 8, 'upcoming', DATE_ADD(NOW(), INTERVAL 2 HOUR)),
-                ('FINAL ZONE BD #002', 'FZ002', 2, 'Clash Squad', 10, 200, 0, 8, 5, 'upcoming', DATE_ADD(NOW(), INTERVAL 4 HOUR)),
-                ('FINAL ZONE BD #003', 'FZ003', 3, 'E-Sport Match', 50, 1000, 10, 12, 12, 'live', DATE_ADD(NOW(), INTERVAL -1 HOUR)),
-                ('FINAL ZONE BD #004', 'FZ004', 4, 'Lone Wolf', 15, 300, 0, 4, 2, 'upcoming', DATE_ADD(NOW(), INTERVAL 6 HOUR)),
-                ('FINAL ZONE BD #005', 'FZ005', 7, 'Free Match', 0, 100, 0, 12, 7, 'upcoming', DATE_ADD(NOW(), INTERVAL 3 HOUR)),
-                ('FINAL ZONE BD #006', 'FZ006', 8, 'Survival Match', 30, 700, 8, 12, 11, 'completed', DATE_ADD(NOW(), INTERVAL -3 HOUR)),
-                ('FINAL ZONE BD #007', 'FZ007', 1, 'BR Match', 25, 600, 6, 12, 9, 'upcoming', DATE_ADD(NOW(), INTERVAL 5 HOUR)),
-                ('FINAL ZONE BD #008', 'FZ008', 6, 'Only Grenade Custom', 20, 400, 0, 8, 4, 'upcoming', DATE_ADD(NOW(), INTERVAL 7 HOUR));
+                ('FINAL Zone BD #001', 'FZ001', 1, 'BR Match', 20, 500, 5, 12, 8, 'upcoming', DATE_ADD(NOW(), INTERVAL 2 HOUR)),
+                ('FINAL Zone BD #002', 'FZ002', 2, 'Clash Squad', 10, 200, 0, 8, 5, 'upcoming', DATE_ADD(NOW(), INTERVAL 4 HOUR)),
+                ('FINAL Zone BD #003', 'FZ003', 3, 'E-Sport Match', 50, 1000, 10, 12, 12, 'live', DATE_ADD(NOW(), INTERVAL -1 HOUR)),
+                ('FINAL Zone BD #004', 'FZ004', 4, 'Lone Wolf', 15, 300, 0, 4, 2, 'upcoming', DATE_ADD(NOW(), INTERVAL 6 HOUR)),
+                ('FINAL Zone BD #005', 'FZ005', 7, 'Free Match', 0, 100, 0, 12, 7, 'upcoming', DATE_ADD(NOW(), INTERVAL 3 HOUR)),
+                ('FINAL Zone BD #006', 'FZ006', 8, 'Survival Match', 30, 700, 8, 12, 11, 'completed', DATE_ADD(NOW(), INTERVAL -3 HOUR)),
+                ('FINAL Zone BD #007', 'FZ007', 1, 'BR Match', 25, 600, 6, 12, 9, 'upcoming', DATE_ADD(NOW(), INTERVAL 5 HOUR)),
+                ('FINAL Zone BD #008', 'FZ008', 6, 'Only Grenade Custom', 20, 400, 0, 8, 4, 'upcoming', DATE_ADD(NOW(), INTERVAL 7 HOUR));
 
                 INSERT INTO results (match_id, title, winner_name, prize_amount) VALUES
                 (6, 'FINAL ZONE BD #006 Result', 'FireKing_BD', 700),
                 (3, 'FINAL ZONE BD #003 Result', 'Shadow_FF', 1000);
 
                 INSERT INTO notices (title, content) VALUES
-                ('গুরুত্বপূর্ণ নোটিশ', 'নির্ধারিত স্লটে থাকুন, বাইরের কাউকে ইনভাইট করবেন 객. ম্যাচ শুরুর ৫ মিনিট আগে রুমে প্রবেশ করুন। Room ID ও Password ম্যাচ শুরুর আগে দেওয়া হবে।');
+                ('গুরুত্বপূর্ণ নোটিশ', 'নির্ধারিত স্লটে থাকুন, বাইরের কাউকে ইনভাইট করবেন না। ম্যাচ শুরুর ৫ মিনিট আগে রুমে প্রবেশ করুন। Room ID ও Password ম্যাচ শুরুর আগে দেওয়া হবে।');
             `);
         }
 
