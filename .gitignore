@@ -2,4 +2,6 @@ node_modules/
 real web data/
 .env
 tmp_*
+db/*.sqlite
+db/*.sqlite-*
 .gemini/
