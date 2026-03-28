@@ -1,20 +1,23 @@
 const mysql = require('mysql2/promise');
 require('dotenv').config();
 
-const dbUri = 'mysql://3A6TaGgYi7CaDM1.root:f0RlCpVMzU7xMP5g@gateway01.eu-central-1.prod.aws.tidbcloud.com:4000/sys?ssl={"rejectUnauthorized":true}';
+const baseUri = 'mysql://3A6TaGgYi7CaDM1.root:f0RlCpVMzU7xMP5g@gateway01.eu-central-1.prod.aws.tidbcloud.com:4000';
+const sslQ = '?ssl={"rejectUnauthorized":true}';
 
-const pool = mysql.createPool(dbUri);
+// URI for app pool -> specific to your DB (final_zone_bd)
+const appDbUri = baseUri + '/final_zone_bd' + sslQ;
+
+// URI for initial setup -> connects to sys because final_zone_bd may not exist yet
+const setupDbUri = baseUri + '/sys' + sslQ + '&multipleStatements=true';
+
+const pool = mysql.createPool(appDbUri);
 
 async function initializeDatabase() {
     try {
-        const connPoolConfig = {
-            uri: dbUri,
-            multipleStatements: true
-        };
-        const conn = await mysql.createConnection(connPoolConfig);
+        const conn = await mysql.createConnection(setupDbUri);
 
-        await conn.query(`CREATE DATABASE IF NOT EXISTS \`${process.env.DB_NAME || 'final_zone_bd'}\``);
-        await conn.query(`USE \`${process.env.DB_NAME || 'final_zone_bd'}\``);
+        await conn.query(`CREATE DATABASE IF NOT EXISTS \`final_zone_bd\``);
+        await conn.query(`USE \`final_zone_bd\``);
         try {
             await conn.query('ALTER TABLE users DROP COLUMN role');
         } catch (e) { }
@@ -193,7 +196,7 @@ async function initializeDatabase() {
                 (3, 'FINAL ZONE BD #003 Result', 'Shadow_FF', 1000);
 
                 INSERT INTO notices (title, content) VALUES
-                ('গুরুত্বপূর্ণ নোটিশ', 'নির্ধারিত স্লটে থাকুন, বাইরের কাউকে ইনভাইট করবেন না। ম্যাচ শুরুর ৫ মিনিট আগে রুমে প্রবেশ করুন। Room ID ও Password ম্যাচ শুরুর আগে দেওয়া হবে।');
+                ('গুরুত্বপূর্ণ নোটিশ', 'নির্ধারিত স্লটে থাকুন, বাইরের কাউকে ইনভাইট করবেন 객. ম্যাচ শুরুর ৫ মিনিট আগে রুমে প্রবেশ করুন। Room ID ও Password ম্যাচ শুরুর আগে দেওয়া হবে।');
             `);
         }
 

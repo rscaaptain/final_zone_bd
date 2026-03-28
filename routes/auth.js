@@ -3,7 +3,6 @@ const bcrypt = require('bcryptjs');
 const { pool } = require('../db/database');
 const router = express.Router();
 
-// Register
 router.post('/register', async (req, res) => {
     const { first_name, last_name, username, email, mobile, password, confirm_password } = req.body;
 
